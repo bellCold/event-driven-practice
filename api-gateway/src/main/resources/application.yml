@@ -1,1 +1,37 @@
+server:
+  port: 8080
 
+spring:
+  application:
+    name: api-gateway-service
+
+  cloud:
+    config:
+      name: bootstrap
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: API Gateway Global Filter
+            preLogger: true
+            postLogger: true
+#      globalcors:
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: "http://localhost:8080/**"
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - DELETE
+#              - PUT
+#              - OPTIONS
+#              - DELETE
+#              - PATCH
+#            allowedHeaders: '*'
+#            allow-credentials: true
+
+      routes:
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/user-service/**

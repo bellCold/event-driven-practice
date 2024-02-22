@@ -8,4 +8,5 @@ class ApiGatewayApplication
 
 fun main(args: Array<String>) {
 	runApplication<ApiGatewayApplication>(*args)
+
 }
