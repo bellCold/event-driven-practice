@@ -18,40 +18,40 @@ spring:
 
       routes:
         - id: user-service
-          uri: "${user_service_uri}/api/v1/"
+          uri: ${user_service_uri}
           predicates:
             - Path=/user-service/ping
             - Method=GET
           filters:
-            - RewritePath=/user-service/(?<segment>.*),$\{segment}
+            - RewritePath=/user-service/(?<segment>.*),/api/v1/${segment}
         - id: user-service
-          uri: "${user_service_uri}"
+          uri: ${user_service_uri}
           predicates:
             - Path=/user-service/login
             - Method=POST
           filters:
-            - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+            - RewritePath=/user-service/(?<segment>.*),/api/v1/${segment}
         - id: user-service
-          uri: "${user_service_uri}"
+          uri: ${user_service_uri}
           predicates:
             - Path=/user-service/reissue
             - Method=GET
           filters:
-            - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+            - RewritePath=/user-service/(?<segment>.*),/api/v1/${segment}
         - id: user-service
-          uri: "${user_service_uri}"
+          uri: ${user_service_uri}
           predicates:
             - Path=/user-service/logout
             - Method=POST
           filters:
-            - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+            - RewritePath=/user-service/(?<segment>.*),/api/v1/${segment}
         - id: user-service
-          uri: "${user_service_uri}"
+          uri: ${user_service_uri}
           predicates:
             - Path=/user-service/auth/reissue
             - Method=GET
           filters:
-            - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+            - RewritePath=/user-service/(?<segment>.*),/api/v1/${segment}
 #        - id: user-service
 #          uri: lb://USER-SERVICE
 #          predicates:
@@ -64,5 +64,4 @@ spring:
 token:
   secret: $2a$10$q42lY7Y18xqrFt1qbODZIO4OMTeOxnrCe7tF3n9bazJinVE7VH5Pi
 
-variables:
-  user_service_uri: "http://localhost:8081"
+user_service_uri: "http://localhost:8081"
