@@ -9,12 +9,6 @@ import javax.crypto.SecretKey
 @Component
 class JwtTokenProvider {
 
-    @Value("\${token.access-expired-time}")
-    var accessExpiredTime: Long = 0
-
-    @Value("\${token.refresh-expired-time}")
-    var refreshExpiredTime: Long = 0
-
     @Value("\${token.secret}")
     lateinit var secret: String
 

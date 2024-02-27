@@ -16,7 +16,7 @@ class GlobalFilter : AbstractGatewayFilterFactory<GlobalFilter.Config>(Config::c
         return GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
             val request = exchange.request
             val response = exchange.response
-            log.info("Global filter baseMessage: {}", config.baseMessage)
+            log.info(">>>>>>>>>>>> Global filter message: {} <<<<<<<<<<<<", config.baseMessage)
 
             if (config.preLogger) {
                 log.info("Global Filter Start: request id -> {}", request.id)
