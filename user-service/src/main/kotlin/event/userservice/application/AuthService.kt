@@ -1,4 +1,7 @@
 package event.userservice.application
 
-class AuthService {
+import org.springframework.stereotype.Service
+
+@Service
+class AuthService() {
 }

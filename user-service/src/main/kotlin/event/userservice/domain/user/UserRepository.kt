@@ -1,4 +1,6 @@
 package event.userservice.domain.user
 
-class UserRepositroy {
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface UserRepository : JpaRepository<User, Long> {
 }

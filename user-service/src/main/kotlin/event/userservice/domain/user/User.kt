@@ -1,4 +1,12 @@
-package event.userservice.domain
+package event.userservice.domain.user
 
-class User {
-}
+import jakarta.persistence.*
+
+@Table(name = "users")
+@Entity
+class User(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long,
+    val name: String,
+    val password: String
+)
