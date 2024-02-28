@@ -26,7 +26,7 @@ class GlobalFilter : AbstractGatewayFilterFactory<GlobalFilter.Config>(Config::c
             chain.filter(exchange)
                 .then(Mono.fromRunnable {
                     if (config.postLogger) {
-                        log.info("Global Filter End: response statusCode -> {}", response.statusCode)
+                        log.info(">>>>>>>>>>>> Global Filter End: response statusCode -> {} <<<<<<<<<<<<", response.statusCode)
                     }
                 })
         }

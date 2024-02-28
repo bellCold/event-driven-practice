@@ -12,16 +12,16 @@ import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 
 @Component
-class AuthorizationHeaderFilter(private val jwtTokenProvider: JwtTokenProvider) :
-    AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config>(Config::class.java) {
+class AuthorizationHeaderFilter(private val jwtTokenProvider: JwtTokenProvider) : AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config>(Config::class.java) {
 
     val log = logger();
 
-    inner class Config
+    class Config
 
     override fun apply(config: Config): GatewayFilter {
         return GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
             val headers = exchange.request.headers
+
             if (!headers.containsKey(HttpHeaders.AUTHORIZATION)) {
                 return@GatewayFilter onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED)
             }

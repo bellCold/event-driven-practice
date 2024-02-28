@@ -6,7 +6,15 @@ import jakarta.persistence.*
 @Entity
 class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-    val name: String,
-    val password: String
+    val id: Long? = 0,
+    var username: String,
+    var email: String,
+    var password: String,
+    @Enumerated(EnumType.STRING)
+    var role: UserRole,
+    var enabled: Boolean = true,
 )
+
+enum class UserRole {
+    BASIC, ADMIN
+}
