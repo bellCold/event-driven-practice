@@ -9,18 +9,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1")
 class AuthController(private val authService: AuthService) {
 
-    /**
-     * TODO
-     * login
-     * logout
-     * refresh
-     */
-
-    @PostMapping("/login")
-    fun login(): String {
-        return "login"
-    }
-
     @PostMapping("/logout")
     fun logout(): String {
         return "logout"

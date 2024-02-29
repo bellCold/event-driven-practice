@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono
 
 @Component
 class GlobalFilter : AbstractGatewayFilterFactory<GlobalFilter.Config>(Config::class.java) {
-    val log = logger();
+    val log = logger()
 
     override fun apply(config: Config): GatewayFilter {
         return GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->

@@ -1,5 +1,6 @@
 package event.userservice.domain.user
 
+import event.userservice.domain.BaseEntity
 import jakarta.persistence.*
 
 @Table(name = "users")
@@ -13,7 +14,7 @@ class User(
     @Enumerated(EnumType.STRING)
     var role: UserRole,
     var enabled: Boolean = true,
-)
+) : BaseEntity()
 
 enum class UserRole {
     BASIC, ADMIN
