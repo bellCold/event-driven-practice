@@ -7,7 +7,7 @@ data class Result<T>(
 ) {
 
     companion object {
-        fun <T> success(data: T): Result<T> {
+        fun <T> success(data: T?): Result<T> {
             return Result(
                 code = Code.SUCCESS,
                 message = null,

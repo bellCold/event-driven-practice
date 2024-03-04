@@ -1,5 +1,6 @@
 package event.userservice.global.utils
 
+import event.userservice.global.logger.logger
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
@@ -12,6 +13,8 @@ import javax.crypto.SecretKey
 
 @Component
 class JwtTokenProvider {
+
+    val log = logger()
 
     @Value("\${token.access-expired-time}")
     private var accessExpiredTime: Long = 0
@@ -58,19 +61,25 @@ class JwtTokenProvider {
             .compact()
     }
 
-    fun validateJwtToken(token: String) {
-        try {
+    fun validateJwtToken(token: String): Boolean {
+        return try {
             Jwts.parser().verifyWith(key as SecretKey).build().parseSignedClaims(token)
-        } catch (jwtException: Exception) {
-            when (jwtException) {
-                is SignatureException,
-                is MalformedJwtException,
-                is UnsupportedJwtException,
-                is IllegalArgumentException,
-                is ExpiredJwtException -> throw jwtException
-
-                else -> throw jwtException
-            }
+            true
+        } catch (e: SignatureException) {
+            log.error("Invalid JWT signature: ${e.message}")
+            false
+        } catch (e: MalformedJwtException) {
+            log.error("Invalid JWT token: ${e.message}")
+            false
+        } catch (e: ExpiredJwtException) {
+            log.error("JWT token is expired: ${e.message}")
+            false
+        } catch (e: UnsupportedJwtException) {
+            log.error("JWT token is unsupported: ${e.message}")
+            false
+        } catch (e: IllegalArgumentException) {
+            log.error("JWT claims string is empty: ${e.message}")
+            false
         }
     }
 

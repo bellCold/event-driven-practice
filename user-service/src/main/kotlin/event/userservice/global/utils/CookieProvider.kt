@@ -16,14 +16,14 @@ class CookieProvider(@Value("\${token.refresh-expired-time}") val refreshTokenEx
             .maxAge(refreshTokenExpiredTime.toLong()).build()
     }
 
-    fun removeRefreshTokenCookie(): ResponseCookie? {
+    fun removeRefreshTokenCookie(): ResponseCookie {
         return ResponseCookie.from("refresh-token", "")
             .maxAge(0)
             .path("/")
             .build()
     }
 
-    fun of(responseCookie: ResponseCookie): Cookie? {
+    fun of(responseCookie: ResponseCookie): Cookie {
         return Cookie(responseCookie.name, responseCookie.value).apply {
             path = responseCookie.path
             secure = responseCookie.isSecure
