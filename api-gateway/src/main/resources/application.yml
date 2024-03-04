@@ -61,6 +61,6 @@ spring:
             - RewritePath=/user-service/(?<segment>.*),/$\{segment}
 
 token:
-  secret: $2a$10$q42lY7Y18xqrFt1qbODZIO4OMTeOxnrCe7tF3n9bazJinVE7VH5Pi
+  secret: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA=
 
 user_service_uri: "http://localhost:8081"

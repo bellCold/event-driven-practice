@@ -1,8 +1,11 @@
 package event.apigateway.security
 
 import io.jsonwebtoken.*
+import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.nio.charset.StandardCharsets
+import java.security.Key
 import java.security.SignatureException
 import javax.crypto.SecretKey
 
@@ -10,11 +13,17 @@ import javax.crypto.SecretKey
 class JwtTokenProvider {
 
     @Value("\${token.secret}")
-    lateinit var secret: String
+    private lateinit var secretKey: String
 
     fun validateJwtToken(token: String) {
+
+        val key: Key by lazy {
+            Keys.hmacShaKeyFor(secretKey.toByteArray(StandardCharsets.UTF_8))
+        }.apply {
+            Jwts.SIG.HS256.key().build().algorithm
+        }
         try {
-            Jwts.parser().verifyWith(secret as SecretKey).build().parseSignedClaims(token)
+            Jwts.parser().verifyWith(key as SecretKey).build().parseSignedClaims(token)
         } catch (jwtException: Exception) {
             when (jwtException) {
                 is SignatureException,
@@ -34,7 +43,7 @@ class JwtTokenProvider {
 
     private fun getClaimsFromJwtToken(token: String): Claims {
         return try {
-            Jwts.parser().verifyWith(secret as SecretKey).build().parseSignedClaims(token).payload
+            Jwts.parser().verifyWith(secretKey as SecretKey).build().parseSignedClaims(token).payload
         } catch (e: ExpiredJwtException) {
             e.claims
         }

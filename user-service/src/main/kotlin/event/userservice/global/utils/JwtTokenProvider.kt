@@ -4,11 +4,11 @@ import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.security.SignatureException
 import java.util.*
 import javax.crypto.SecretKey
-
 
 @Component
 class JwtTokenProvider {
@@ -23,16 +23,15 @@ class JwtTokenProvider {
     private lateinit var secretKey: String
 
     val key: Key by lazy {
-        Keys.hmacShaKeyFor(secretKey.toByteArray())
+        Keys.hmacShaKeyFor(secretKey.toByteArray(StandardCharsets.UTF_8))
+    }.apply {
+        Jwts.SIG.HS256.key().build().algorithm
     }
 
-    private val signatureAlgorithm = Jwts.SIG.HS512
-
     fun createAccessToken(userId: String, uri: String, roles: List<String>): String {
-        val claims = Jwts.claims().apply {
-            subject(userId)
-            mapOf("roles" to roles)
-        }.build()
+        val claims = mutableMapOf<String, Any>()
+        claims["sub"] = userId
+        claims["roles"] = roles
 
         return Jwts.builder()
             .claims()
@@ -46,9 +45,8 @@ class JwtTokenProvider {
     }
 
     fun createRefreshToken(): String {
-        val claims = Jwts.claims().apply {
-            mapOf("value" to UUID.randomUUID())
-        }.build()
+        val claims = mutableMapOf<String, Any>()
+        claims["value"] = UUID.randomUUID()
 
         return Jwts.builder()
             .claims()
