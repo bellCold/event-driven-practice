@@ -19,7 +19,7 @@ class JwtTokenProvider {
     @Value("\${token.refresh-expired-time}")
     private var refreshExpiredTime: Long = 0
 
-    @Value("\${jwt.secret.key}")
+    @Value("\${token.secret}")
     private lateinit var secretKey: String
 
     val key: Key by lazy {
@@ -41,13 +41,14 @@ class JwtTokenProvider {
             .expiration(Date(System.currentTimeMillis() + accessExpiredTime))
             .issuedAt(Date())
             .issuer(uri)
-            .signWith(key, signatureAlgorithm)
+            .signWith(key)
             .compact()
     }
 
     fun createRefreshToken(): String {
-        val claims = Jwts.claims().build()
-        claims["value"] = UUID.randomUUID()
+        val claims = Jwts.claims().apply {
+            mapOf("value" to UUID.randomUUID())
+        }.build()
 
         return Jwts.builder()
             .claims()
@@ -55,13 +56,13 @@ class JwtTokenProvider {
             .and()
             .expiration(Date(System.currentTimeMillis() + refreshExpiredTime))
             .issuedAt(Date())
-            .signWith(secret as Key)
+            .signWith(key)
             .compact()
     }
 
     fun validateJwtToken(token: String) {
         try {
-            Jwts.parser().verifyWith(secret as SecretKey).build().parseSignedClaims(token)
+            Jwts.parser().verifyWith(key as SecretKey).build().parseSignedClaims(token)
         } catch (jwtException: Exception) {
             when (jwtException) {
                 is SignatureException,
@@ -85,7 +86,7 @@ class JwtTokenProvider {
 
     private fun getClaimsFromJwtToken(token: String): Claims {
         return try {
-            Jwts.parser().verifyWith(secret as SecretKey).build().parseSignedClaims(token).payload
+            Jwts.parser().verifyWith(key as SecretKey).build().parseSignedClaims(token).payload
         } catch (e: ExpiredJwtException) {
             e.claims
         }

@@ -1,5 +1,6 @@
 package event.userservice.global.security
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import event.userservice.application.RefreshTokenService
 import event.userservice.global.dto.LoginRequest
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.stereotype.Component
 import java.text.SimpleDateFormat
+
 
 @Component
 class LoginAuthenticationFilter(
@@ -58,6 +60,7 @@ class LoginAuthenticationFilter(
         authResult: Authentication
     ) {
         log.info("login successfulAuthentication")
+
         val user = authResult.principal as User
 
         val roles = user.authorities.map { it.authority }.toList()
@@ -77,6 +80,7 @@ class LoginAuthenticationFilter(
             "expiredTime" to SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(expiredTime)
         )
 
-        jacksonObjectMapper().writeValue(response.outputStream, Result.success(tokens))
+        jacksonObjectMapper().configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true)
+        jacksonObjectMapper().writeValue(response.outputStream, tokens)
     }
 }
