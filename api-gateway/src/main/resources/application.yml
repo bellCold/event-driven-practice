@@ -48,13 +48,6 @@ spring:
         - id: user-service
           uri: ${user_service_uri}
           predicates:
-            - Path=/user-service/auth/reissue
-            - Method=GET
-          filters:
-            - RewritePath=/user-service/(?<segment>.*),/api/v1/${segment}
-        - id: user-service
-          uri: ${user_service_uri}
-          predicates:
             - Path=/user-service/**
           filters:
             - AuthorizationHeaderFilter

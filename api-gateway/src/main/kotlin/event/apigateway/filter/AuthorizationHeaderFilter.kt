@@ -22,6 +22,8 @@ class AuthorizationHeaderFilter(private val jwtTokenProvider: JwtTokenProvider) 
         return GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
             val headers = exchange.request.headers
 
+            log.info(">>>>>>>>>>>> Global AuthorizationHeaderFilter <<<<<<<<<<<<")
+
             if (!headers.containsKey(HttpHeaders.AUTHORIZATION)) {
                 return@GatewayFilter onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED)
             }

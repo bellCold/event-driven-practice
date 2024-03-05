@@ -102,4 +102,8 @@ class JwtTokenProvider {
     fun getRefreshTokenId(token: String): String {
         return getClaimsFromJwtToken(token)["value"].toString()
     }
+
+    fun equalRefreshTokenId(refreshTokenId: String, refreshToken: String): Boolean {
+        return refreshTokenId == getRefreshTokenId(refreshToken)
+    }
 }
