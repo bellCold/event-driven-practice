@@ -12,9 +12,10 @@ class User(
     var email: String,
     var password: String,
     @Enumerated(EnumType.STRING)
-    var role: UserRole,
-    var enabled: Boolean = true,
+    var role: UserRole? = UserRole.BASIC,
+    var enabled: Boolean? = true,
 ) : BaseEntity()
+
 
 enum class UserRole {
     BASIC, ADMIN

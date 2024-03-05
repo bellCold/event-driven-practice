@@ -1,3 +1,8 @@
 package event.orderservice.api.request
 
-data class OrderRequsetDto()
+import event.orderservice.domain.order.Address
+
+data class OrderRequestDto(
+    val totalOrderAmount: Int,
+    val address: Address
+)

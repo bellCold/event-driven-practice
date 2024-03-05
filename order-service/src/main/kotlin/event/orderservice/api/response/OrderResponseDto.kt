@@ -1,3 +1,8 @@
 package event.orderservice.api.response
 
-data class OrderResponseDto()
+import java.time.LocalDateTime
+
+data class OrderResponseDto(
+    val orderDate: LocalDateTime,
+    val totalOrderAmount: Int
+)

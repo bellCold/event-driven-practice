@@ -2,7 +2,6 @@ package event.orderservice.domain.order
 
 import event.orderservice.domain.BaseEntity
 import jakarta.persistence.*
-import java.time.LocalDate
 
 @Table(name = "orders")
 @Entity
@@ -13,9 +12,13 @@ class Order(
     @Embedded
     val address: Address,
     @Enumerated(EnumType.STRING)
-    val orderStatus: OrderStatus? = OrderStatus.ORDER_PLACED,
-    val totalOrderAmount: Int,
-    val orderDate: LocalDate
+    var orderStatus: OrderStatus? = OrderStatus.ORDER_PLACED,
+    val totalOrderAmount: Int
 ) : BaseEntity() {
+
+
+    fun cancel() {
+        this.orderStatus = OrderStatus.CANCELLED
+    }
 }
 
