@@ -27,6 +27,13 @@ spring:
         - id: user-service
           uri: ${user_service_uri}
           predicates:
+            - Path=/user-service/users
+            - Method=POST
+          filters:
+            - RewritePath=/user-service/(?<segment>.*),/api/v1/${segment}
+        - id: user-service
+          uri: ${user_service_uri}
+          predicates:
             - Path=/user-service/login
             - Method=POST
           filters:
