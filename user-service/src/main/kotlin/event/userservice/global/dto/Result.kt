@@ -1,23 +1,23 @@
 package event.userservice.global.dto
 
-data class Result<T>(
-    private val code: Code,
-    private val message: String?,
-    private val data: T?
-) {
+import event.userservice.global.dto.Code.SUCCESS
 
+data class Result(
+    val code: Code,
+    val message: String,
+) {
     companion object {
-        fun <T> success(data: T?): Result<T> {
+        fun success(): Result {
             return Result(
-                code = Code.SUCCESS,
-                message = null,
-                data = data
+                code = SUCCESS,
+                message = SUCCESS.description
             )
         }
     }
 }
 
-enum class Code {
-    SUCCESS,
-    ERROR;
+enum class Code(val description: String) {
+    SUCCESS("성공"),
+    ERROR("실패");
 }
+

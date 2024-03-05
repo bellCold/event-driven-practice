@@ -38,7 +38,6 @@ class LoginAuthenticationFilter(
         log.info("login request")
         return try {
             val loginRequest = jacksonObjectMapper().readValue(request.inputStream, LoginRequest::class.java)
-            log.info("id -> {} | password -> {}", loginRequest.email, loginRequest.password)
             authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
                     loginRequest.email,

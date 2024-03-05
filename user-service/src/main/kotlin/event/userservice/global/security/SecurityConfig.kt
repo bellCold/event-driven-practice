@@ -38,10 +38,6 @@ class SecurityConfig(
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { it.anyRequest().permitAll() }
-            .logout {
-                it.logoutUrl("/api/v1/logout")
-                    .deleteCookies("refresh-token")
-            }
             .userDetailsService(userDetailsService)
             .addFilter(loginAuthenticationFilter)
 
