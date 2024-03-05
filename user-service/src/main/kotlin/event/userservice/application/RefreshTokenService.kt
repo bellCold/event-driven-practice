@@ -23,7 +23,7 @@ class RefreshTokenService(
 
     fun updateRefreshToken(id: Long, uuid: String) {
         val user = userRepository.findById(id).orElseThrow { NotFoundException() }
-        refreshRedisTokenRepository.save(RefreshToken(user.id.toString(), uuid))
+        refreshRedisTokenRepository.save(RefreshToken(user.bulletAccountId.toString(), uuid))
     }
 
     fun logoutToken(accessToken: String) {

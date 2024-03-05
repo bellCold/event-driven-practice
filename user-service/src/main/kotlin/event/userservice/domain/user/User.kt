@@ -7,7 +7,7 @@ import jakarta.persistence.*
 @Entity
 class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = 0,
+    val bulletAccountId: Long? = 0,
     var username: String,
     var email: String,
     var password: String,

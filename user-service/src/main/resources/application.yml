@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username:
-    password:
+    url: jdbc:postgresql://localhost:5433/users
+    username: bell
+    password: cold
 
   jpa:
     open-in-view: true
@@ -14,3 +14,10 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
+
+token:
+  access-expired-time: 3600000
+  refresh-expired-time: 604800000
+  secret: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA=
+  refresh-token-name: refresh-token
+  access-token-name: access-token

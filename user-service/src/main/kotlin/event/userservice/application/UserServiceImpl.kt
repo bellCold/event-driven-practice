@@ -15,6 +15,6 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserDetailsS
         val user = userRepository.findByEmail(username) ?: throw UsernameNotFoundException("User not found in the db")
 
         val authorities = mutableListOf(SimpleGrantedAuthority(user.role.toString()))
-        return User(user.id.toString(), user.password, authorities)
+        return User(user.bulletAccountId.toString(), user.password, authorities)
     }
 }
