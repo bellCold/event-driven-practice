@@ -7,7 +7,6 @@ import event.orderservice.domain.order.OrderRepository
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 class OrderService(private val orderRepository: OrderRepository) {
@@ -28,7 +27,7 @@ class OrderService(private val orderRepository: OrderRepository) {
 
         return OrderResponseDto(
             totalOrderAmount = findOrder.totalOrderAmount,
-            orderDate = LocalDateTime.now()
+            orderDate = findOrder.createdAt
         )
     }
 
