@@ -17,6 +17,7 @@ spring:
             postLogger: true
 
       routes:
+        #============================user-service============================#
         - id: user-service
           uri: ${user_service_uri}
           predicates:
@@ -60,7 +61,22 @@ spring:
             - AuthorizationHeaderFilter
             - RewritePath=/user-service/(?<segment>.*),/$\{segment}
 
+        #============================order-service============================#
+        - id: order-service
+          uri: ${order_service_uri}
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - AuthorizationHeaderFilter
+            - RewritePath=/order-service/(?<segment>.*),/api/v1/${segment}
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 3
+                redis-rate-limiter.burstCapacity: 3
+                key-resolver: "#{@tokenKeyResolver}"
+
 token:
   secret: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA=
 
 user_service_uri: "http://localhost:8081"
+order_service_uri: "http://localhost:8082"

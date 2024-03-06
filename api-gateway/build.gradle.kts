@@ -23,6 +23,7 @@ extra["springCloudVersion"] = "2023.0.0"
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("io.jsonwebtoken:jjwt-api:0.12.3")

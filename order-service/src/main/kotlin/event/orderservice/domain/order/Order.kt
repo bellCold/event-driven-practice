@@ -16,7 +16,6 @@ class Order(
     val totalOrderAmount: Int
 ) : BaseEntity() {
 
-
     fun cancel() {
         this.orderStatus = OrderStatus.CANCELLED
     }
