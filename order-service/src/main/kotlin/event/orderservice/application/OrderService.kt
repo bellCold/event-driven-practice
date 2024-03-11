@@ -1,10 +1,11 @@
 package event.orderservice.application
 
+import event.orderservice.api.error.ErrorCode
+import event.orderservice.api.error.OrderServerException
 import event.orderservice.api.request.OrderRequestDto
 import event.orderservice.api.response.OrderResponseDto
 import event.orderservice.domain.order.Order
 import event.orderservice.domain.order.OrderRepository
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -38,7 +39,7 @@ class OrderService(private val orderRepository: OrderRepository) {
     }
 
     private fun findOrder(orderId: Long): Order {
-        return orderRepository.findById(orderId).orElseThrow { throw NotFoundException() }
+        return orderRepository.findById(orderId).orElseThrow { throw OrderServerException(ErrorCode.ORDER_NOT_FOUND) }
     }
 
 }

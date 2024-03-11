@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class OrderController(private val orderService: OrderService) {
 
     @PostMapping("/orders")
-    fun createOrder(@AuthenticatedBulletUserId bulletAccountId: Long, @RequestBody orderRequestDto: OrderRequestDto): ResponseEntity<Result<Nothing?>> {
+    fun createOrder(@AuthenticatedBulletUserId bulletAccountId: Long, @RequestBody orderRequestDto: OrderRequestDto): ResponseEntity<Result<Nothing>> {
         orderService.createOrder(bulletAccountId, orderRequestDto)
         return ResponseEntity.status(HttpStatus.OK).body(Result.success())
     }

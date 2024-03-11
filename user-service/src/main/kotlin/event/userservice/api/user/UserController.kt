@@ -1,6 +1,7 @@
 package event.userservice.api.user
 
-import event.userservice.api.requset.user.CreateUserRequestDto
+import event.userservice.api.requset.user.UserCreateRequestDto
+import event.userservice.api.response.UserCreateResponseDto
 import event.userservice.application.UserService
 import event.userservice.global.dto.Result
 import org.springframework.http.HttpStatus
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(private val userService: UserService) {
 
     @PostMapping("/users")
-    fun createUser(@RequestBody createUserRequestDto: CreateUserRequestDto): ResponseEntity<Result<Nothing?>> {
-        userService.createUser(createUserRequestDto)
-        return ResponseEntity.status(HttpStatus.OK).body(Result.success())
+    fun createUser(@RequestBody userCreateRequestDto: UserCreateRequestDto): ResponseEntity<Result<UserCreateResponseDto>> {
+        val result = userService.createUser(userCreateRequestDto)
+        return ResponseEntity.status(HttpStatus.OK).body(Result.success(result))
     }
 }
