@@ -4,6 +4,7 @@ import event.orderservice.domain.BaseEntity
 import jakarta.persistence.*
 
 @Table(name = "orders")
+@EntityListeners(OrderListener::class)
 @Entity
 class Order(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(private val userRepository: UserRepository, private val passwordEncoder: PasswordEncoder) {
 
-    fun createUser(userCreateRequestDto: UserCreateRequestDto): UserCreateResponseDto {
+    fun createUser(userCreateRequestDto: UserCreateRequestDto): UserCreateResponseDto  {
         if (userRepository.existsByEmail(email = userCreateRequestDto.email)) {
             throw UserServerException(ErrorCode.ALREADY_EXISTED_USER)
         }
@@ -26,6 +26,7 @@ class UserService(private val userRepository: UserRepository, private val passwo
         val saveUser = userRepository.save(user)
 
         return UserCreateResponseDto.domainToDto(saveUser)
+
     }
 
 }

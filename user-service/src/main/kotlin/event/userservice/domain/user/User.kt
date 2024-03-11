@@ -16,7 +16,6 @@ class User(
     var enabled: Boolean? = true,
 ) : BaseEntity()
 
-
 enum class UserRole {
     BASIC, ADMIN
 }

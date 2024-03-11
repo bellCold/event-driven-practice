@@ -1,18 +1,22 @@
 package event.orderservice.domain.order
 
-import event.orderservice.application.kafka.OrderSender
+import event.orderservice.application.message.OrderSender
 import event.orderservice.global.logger.logger
 import jakarta.persistence.PostLoad
-import jakarta.persistence.PostUpdate
-import org.springframework.context.annotation.Lazy
+import jakarta.persistence.PostPersist
+import org.springframework.beans.factory.annotation.Autowired
 
-class OrderListener(@Lazy private val orderSender: OrderSender) {
+class OrderListener {
+
+    @Autowired
+    private lateinit var orderSender: OrderSender
     private val log = logger()
 
     @PostLoad
-    @PostUpdate
+    @PostPersist
     fun eventPubByOrder(order: Order) {
         log.info("[OrderListener] {}", OrderStatus.ORDER_PLACED)
+        log.info("order-id {}", order.id)
         if (order.orderStatus == OrderStatus.ORDER_PLACED) {
             try {
                 orderSender.orderPlaced(order)
@@ -29,5 +33,4 @@ class OrderListener(@Lazy private val orderSender: OrderSender) {
             }
         }
     }
-
 }
