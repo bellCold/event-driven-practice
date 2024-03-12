@@ -1,6 +1,5 @@
 package event.orderservice.global.filter
 
-import event.orderservice.global.annotation.AuthenticatedBulletUserId
 import org.springframework.core.MethodParameter
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -23,3 +22,7 @@ class AuthenticatedUserIdResolver : HandlerMethodArgumentResolver {
         return webRequest.getHeader("user-id")?.toLong() ?: throw NotFoundException()
     }
 }
+
+@Target(AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class AuthenticatedBulletUserId

@@ -3,7 +3,6 @@ package event.userservice.api
 import event.userservice.api.error.ErrorCode
 import event.userservice.api.error.LogType
 import event.userservice.api.error.UserServerException
-import event.userservice.global.dto.Result
 import event.userservice.global.logger.logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

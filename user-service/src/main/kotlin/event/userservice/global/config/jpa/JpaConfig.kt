@@ -1,4 +1,4 @@
-package event.userservice.global.jpa
+package event.userservice.global.config.jpa
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing

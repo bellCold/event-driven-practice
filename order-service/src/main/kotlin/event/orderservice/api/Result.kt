@@ -1,7 +1,8 @@
-package event.userservice.global.dto
+package event.orderservice.api
 
-import event.userservice.api.error.ErrorCode
-import event.userservice.global.dto.Code.*
+import event.orderservice.api.error.ErrorCode
+import event.orderservice.api.Code.FAIL
+import event.orderservice.api.Code.SUCCESS
 
 data class Result<T>(
     val code: Code,

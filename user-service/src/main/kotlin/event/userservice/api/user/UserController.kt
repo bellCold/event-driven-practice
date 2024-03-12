@@ -3,7 +3,7 @@ package event.userservice.api.user
 import event.userservice.api.requset.user.UserCreateRequestDto
 import event.userservice.api.response.UserCreateResponseDto
 import event.userservice.application.UserService
-import event.userservice.global.dto.Result
+import event.userservice.api.Result
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

@@ -2,7 +2,7 @@ package event.userservice.api.auth
 
 import event.userservice.api.response.auth.JwtTokenResponseDto
 import event.userservice.application.RefreshTokenService
-import event.userservice.global.dto.Result
+import event.userservice.api.Result
 import event.userservice.global.utils.CookieProvider
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

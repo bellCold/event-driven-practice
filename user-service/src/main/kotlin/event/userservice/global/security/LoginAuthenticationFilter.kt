@@ -3,6 +3,7 @@ package event.userservice.global.security
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import event.userservice.application.RefreshTokenService
+import event.userservice.global.constant.TIME_FORMAT
 import event.userservice.global.dto.LoginRequest
 import event.userservice.global.logger.logger
 import event.userservice.global.utils.CookieProvider
@@ -76,7 +77,7 @@ class LoginAuthenticationFilter(
 
         val tokens = mapOf(
             "accessToken" to accessToken,
-            "expiredTime" to SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(expiredTime)
+            "expiredTime" to SimpleDateFormat(TIME_FORMAT).format(expiredTime)
         )
 
         jacksonObjectMapper().configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true)

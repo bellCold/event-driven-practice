@@ -3,7 +3,6 @@ package event.orderservice.api
 import event.orderservice.api.error.ErrorCode
 import event.orderservice.api.error.LogType
 import event.orderservice.api.error.OrderServerException
-import event.orderservice.global.dto.Result
 import event.orderservice.global.logger.logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

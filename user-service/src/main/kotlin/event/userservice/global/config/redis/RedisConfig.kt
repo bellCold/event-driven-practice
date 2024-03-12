@@ -1,4 +1,4 @@
-package event.userservice.global.redis
+package event.userservice.global.config.redis
 
 import event.userservice.global.logger.logger
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties

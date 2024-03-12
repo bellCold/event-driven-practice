@@ -2,8 +2,8 @@ package event.orderservice.api.order
 
 import event.orderservice.api.request.OrderRequestDto
 import event.orderservice.application.OrderService
-import event.orderservice.global.annotation.AuthenticatedBulletUserId
-import event.orderservice.global.dto.Result
+import event.orderservice.api.Result
+import event.orderservice.global.filter.AuthenticatedBulletUserId
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
