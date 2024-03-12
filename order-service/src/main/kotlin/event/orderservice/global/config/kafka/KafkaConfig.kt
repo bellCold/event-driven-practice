@@ -19,13 +19,11 @@ class KafkaConfig(
 
     @Bean
     fun producerFactory(): ProducerFactory<String, String> {
-        val configs = mapOf(
-            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to "$kafkaServerHost:$kafkaServerPort",
-            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
-            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java
-        )
-
-        return DefaultKafkaProducerFactory(configs)
+        val properties = mutableMapOf<String, Any>()
+        properties[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = "$kafkaServerHost:$kafkaServerPort"
+        properties[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
+        properties[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
+        return DefaultKafkaProducerFactory(properties)
     }
 
     @Bean

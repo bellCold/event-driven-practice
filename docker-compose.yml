@@ -1,8 +1,15 @@
 version: "3"
 
 services:
+
   redis:
-    image: redis
+    container_name: redis
+    image: redis:alpine
+    command: redis-server --port 6379
+    hostname: redis_boot
+    labels:
+      - "name=redis"
+      - "mode=standalone"
     ports:
       - "6379:6379"
 
@@ -16,7 +23,8 @@ services:
       - "5433:5432"
 
   zookeeper:
-    image: wurstmeister/zookeeper
+    image: zookeeper:3.9
+    container_name: zookeeper
     ports:
       - "2181:2181"
 

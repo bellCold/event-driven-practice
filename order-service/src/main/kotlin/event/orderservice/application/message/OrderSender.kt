@@ -1,10 +1,8 @@
 package event.orderservice.application.message
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import event.orderservice.domain.order.Order
 import event.orderservice.global.logger.logger
-import jakarta.annotation.PostConstruct
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
@@ -15,20 +13,12 @@ class OrderSender(
 ) {
     val log = logger()
 
-    @PostConstruct
-    fun postInitOrderSender() {
-        println("postInitOrderSender")
-    }
-
     fun orderPlaced(order: Order) {
-        objectMapper.registerKotlinModule()
 
         val kafkaSendOrderEventDto = KafkaSendOrderEventDto(
             bulletAccountId = order.bulletAccountId,
             orderId = order.id
         )
-
-        println(kafkaSendOrderEventDto)
 
         val jsonInString = objectMapper.writeValueAsString(kafkaSendOrderEventDto)
         kafkaTemplate.send("orderPlaced", jsonInString)
@@ -42,9 +32,8 @@ class OrderSender(
         )
     }
 
-
     data class KafkaSendOrderEventDto(
-        private val bulletAccountId: Long,
-        private val orderId: Long?
+        val bulletAccountId: Long,
+        val orderId: Long?
     )
 }
