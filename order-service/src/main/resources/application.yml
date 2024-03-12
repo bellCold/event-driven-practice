@@ -15,6 +15,11 @@ spring:
     properties:
       hibernate.format_sql: true
 
+  kafka:
+    admin:
+      security:
+        protocol: SSL
+
 kafka:
   host: 127.0.0.1
   port: 9092
