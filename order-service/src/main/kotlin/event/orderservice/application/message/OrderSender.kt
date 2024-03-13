@@ -5,6 +5,7 @@ import event.orderservice.domain.order.Order
 import event.orderservice.global.logger.logger
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class OrderSender(
@@ -28,12 +29,13 @@ class OrderSender(
     fun orderCanceled(order: Order) {
         KafkaSendOrderEventDto(
             bulletAccountId = order.bulletAccountId,
-            orderId = order.id!!
+            orderId = order.id
         )
     }
 
     data class KafkaSendOrderEventDto(
         val bulletAccountId: Long,
-        val orderId: Long?
+        val orderId: Long?,
+        val createAt: LocalDateTime = LocalDateTime.now()
     )
 }
