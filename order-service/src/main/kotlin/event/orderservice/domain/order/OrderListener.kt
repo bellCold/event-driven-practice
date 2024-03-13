@@ -16,21 +16,10 @@ class OrderListener {
     @PostPersist
     fun eventPubByOrder(order: Order) {
         log.info("[OrderListener] {}", OrderStatus.ORDER_PLACED)
-        log.info("order-id {}", order.id)
-        if (order.orderStatus == OrderStatus.ORDER_PLACED) {
-            try {
-                orderSender.orderPlaced(order)
-            } catch (e: Exception) {
-                throw IllegalArgumentException()
-            }
-        }
-
-        if (order.orderStatus == OrderStatus.CANCELLED) {
-            try {
-                orderSender.orderCanceled(order)
-            } catch (e: Exception) {
-                throw IllegalArgumentException()
-            }
+        try {
+            orderSender.sendOrderEvent(order)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Failed to process order: ${e.message}")
         }
     }
 }

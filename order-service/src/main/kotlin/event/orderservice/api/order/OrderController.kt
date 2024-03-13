@@ -3,6 +3,7 @@ package event.orderservice.api.order
 import event.orderservice.api.request.OrderRequestDto
 import event.orderservice.application.OrderService
 import event.orderservice.api.Result
+import event.orderservice.api.response.OrderResponseDto
 import event.orderservice.global.filter.AuthenticatedBulletUserId
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,8 +20,9 @@ class OrderController(private val orderService: OrderService) {
     }
 
     @GetMapping("/orders/{orderId}")
-    fun getOrder(@PathVariable orderId: Long) {
-        orderService.getOrder(orderId)
+    fun getOrder(@PathVariable orderId: Long): ResponseEntity<Result<OrderResponseDto>> {
+        val result = orderService.getOrder(orderId)
+        return ResponseEntity.status(HttpStatus.OK).body(Result.success(result))
     }
 
     @DeleteMapping("/orders/{orderId}")

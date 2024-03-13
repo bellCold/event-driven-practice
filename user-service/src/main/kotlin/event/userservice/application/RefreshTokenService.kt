@@ -1,5 +1,7 @@
 package event.userservice.application
 
+import event.userservice.api.error.ErrorCode
+import event.userservice.api.error.UserServerException
 import event.userservice.api.response.auth.JwtTokenResponseDto
 import event.userservice.domain.jwt.RefreshRedisTokenRepository
 import event.userservice.domain.jwt.RefreshToken
@@ -22,13 +24,13 @@ class RefreshTokenService(
 ) {
 
     fun updateRefreshToken(id: Long, uuid: String) {
-        val user = userRepository.findById(id).orElseThrow { NotFoundException() }
+        val user = userRepository.findById(id).orElseThrow { throw UserServerException(ErrorCode.USER_NOT_FOUND) }
         refreshRedisTokenRepository.save(RefreshToken(user.bulletAccountId.toString(), uuid))
     }
 
     fun logoutToken(accessToken: String) {
         if (!jwtTokenProvider.validateJwtToken(accessToken)) {
-            throw RuntimeException("access token is not valid")
+            throw UserServerException(ErrorCode.INVALID)
         }
 
         val refreshToken = refreshRedisTokenRepository.findById(jwtTokenProvider.getUserId(accessToken))
@@ -40,7 +42,7 @@ class RefreshTokenService(
     @Transactional
     fun refreshJwtToken(accessToken: String, refreshToken: String): JwtTokenResponseDto {
         val userId = jwtTokenProvider.getUserId(accessToken)
-        val findRefreshToken = refreshRedisTokenRepository.findById(userId).orElseThrow { throw NotFoundException() }
+        val findRefreshToken = refreshRedisTokenRepository.findById(userId).orElseThrow { throw UserServerException(ErrorCode.USER_NOT_FOUND) }
         val findRefreshTokenId = findRefreshToken.refreshTokenId
 
         if (!jwtTokenProvider.equalRefreshTokenId(findRefreshTokenId, refreshToken)) {
@@ -52,7 +54,7 @@ class RefreshTokenService(
             throw IllegalArgumentException()
         }
 
-        val findUser = userRepository.findById(userId.toLong()).orElseThrow { throw NotFoundException() }
+        val findUser = userRepository.findById(userId.toLong()).orElseThrow { throw UserServerException(ErrorCode.USER_NOT_FOUND) }
 
         val roles = getAuthentication(findUser.email).authorities
             .map(GrantedAuthority::getAuthority)

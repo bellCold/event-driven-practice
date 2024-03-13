@@ -24,21 +24,18 @@ class OrderService(private val orderRepository: OrderRepository) {
 
     @Transactional(readOnly = true)
     fun getOrder(orderId: Long): OrderResponseDto {
-        val findOrder = findOrder(orderId)
+        val findOrder = findOrderById(orderId)
 
-        return OrderResponseDto(
-            totalOrderAmount = findOrder.totalOrderAmount,
-            orderDate = findOrder.createdAt
-        )
+        return OrderResponseDto.domainToDto(findOrder)
     }
 
     @Transactional
     fun orderCancel(orderId: Long) {
-        val order = findOrder(orderId)
+        val order = findOrderById(orderId)
         order.cancel()
     }
 
-    private fun findOrder(orderId: Long): Order {
+    private fun findOrderById(orderId: Long): Order {
         return orderRepository.findById(orderId).orElseThrow { throw OrderServerException(ErrorCode.ORDER_NOT_FOUND) }
     }
 
