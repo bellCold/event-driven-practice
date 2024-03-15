@@ -5,5 +5,10 @@ import event.orderservice.domain.order.Address
 data class OrderRequestDto(
     val totalOrderAmount: Int,
     val address: Address,
-    val productIds: MutableList<Long>
+    val products: MutableList<ProductRequestDto>
+)
+
+data class ProductRequestDto(
+    val productId: Long,
+    val quantity: Int
 )

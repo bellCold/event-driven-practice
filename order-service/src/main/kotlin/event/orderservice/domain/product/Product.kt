@@ -9,10 +9,17 @@ class Product(
     val id: Long? = 0,
     val name: String,
     val price: Int,
-    val stockQuantity: Int,
+    var stockQuantity: Int,
     @Enumerated(EnumType.STRING)
     val category: Category
-) : BaseEntity()
+) : BaseEntity() {
+    fun decreaseStock(quantity: Int) {
+        if (this.stockQuantity - quantity < 0) {
+            throw IllegalStateException("재고 수량이 부족합니다.")
+        }
+        this.stockQuantity -= quantity
+    }
+}
 
 enum class Category(val description: String) {
     ELECTRONICS("전자"),
