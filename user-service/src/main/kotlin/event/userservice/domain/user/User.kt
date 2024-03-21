@@ -13,7 +13,7 @@ class User(
     var password: String,
     @Enumerated(EnumType.STRING)
     var role: UserRole? = UserRole.BASIC,
-    var enabled: Boolean? = true,
+    var isActivated: Boolean? = true,
 ) : BaseEntity()
 
 enum class UserRole {
