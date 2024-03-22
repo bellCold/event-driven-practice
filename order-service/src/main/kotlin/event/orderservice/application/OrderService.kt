@@ -21,7 +21,11 @@ class OrderService(
 
     @Transactional
     fun createOrder(bulletAccountId: Long, orderRequestDto: OrderRequestDto) {
-        val products = productRepository.findByIdIn(orderRequestDto.products.map { it.productId }) ?: throw OrderServerException(ErrorCode.PRODUCT_NOT_FOUND)
+        val products = productRepository.findByIdIn(orderRequestDto.products.map { it.productId })
+
+        if (products.isEmpty()) {
+            throw OrderServerException(ErrorCode.PRODUCT_NOT_FOUND)
+        }
 
         val order = Order(
             bulletAccountId = bulletAccountId,

@@ -7,6 +7,7 @@ enum class ErrorCode(val code: Int, val logType: LogType, val message: String) {
     ORDER_NOT_FOUND(400, ERROR, "해당 주문을 찾을 수 없습니다."),
     INTER_SERVER_ERROR(500, ERROR, "주문 서버 에러"),
     PRODUCT_NOT_FOUND(400, ERROR, "해당 상품을 찾을 수 없습니다."),
+    STOCK_QUANTITY_SHORTAGE(400, ERROR, "재고 수량이 부족합니다.")
 }
 
 enum class LogType {

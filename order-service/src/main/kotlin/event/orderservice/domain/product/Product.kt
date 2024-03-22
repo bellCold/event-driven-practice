@@ -1,5 +1,7 @@
 package event.orderservice.domain.product
 
+import event.orderservice.api.error.ErrorCode
+import event.orderservice.api.error.OrderServerException
 import event.orderservice.domain.BaseEntity
 import jakarta.persistence.*
 
@@ -11,20 +13,12 @@ class Product(
     val price: Int,
     var stockQuantity: Int,
     @Enumerated(EnumType.STRING)
-    val category: Category
+    val productCategory: ProductCategory
 ) : BaseEntity() {
     fun decreaseStock(quantity: Int) {
         if (this.stockQuantity - quantity < 0) {
-            throw IllegalStateException("재고 수량이 부족합니다.")
+            throw OrderServerException(ErrorCode.STOCK_QUANTITY_SHORTAGE)
         }
         this.stockQuantity -= quantity
     }
-}
-
-enum class Category(val description: String) {
-    ELECTRONICS("전자"),
-    CLOTHING("의류"),
-    BOOKS("책"),
-    HOME_APPLIANCES("가전"),
-    SPORTS("스포츠")
 }
