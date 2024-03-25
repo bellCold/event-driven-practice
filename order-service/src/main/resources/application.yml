@@ -10,7 +10,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate.format_sql: true
@@ -19,6 +19,12 @@ spring:
     admin:
       security:
         protocol: SSL
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+      data-locations: classpath:sql/data.sql
 
 kafka:
   host: 127.0.0.1

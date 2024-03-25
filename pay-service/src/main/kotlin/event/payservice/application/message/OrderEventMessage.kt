@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class OrderMessage(private val objectMapper: ObjectMapper) {
+class OrderEventMessage(private val objectMapper: ObjectMapper) {
 
     val log = logger()
 

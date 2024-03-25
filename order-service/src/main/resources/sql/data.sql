@@ -1,0 +1,2 @@
+INSERT INTO product (id, name, price, stock_quantity) VALUES (nextval('product_id_seq'), 'Product A', 100.00, 100);
+INSERT INTO product (id, name, price, stock_quantity) VALUES (nextval('product_id_seq'), 'Product B', 200.00, 100);
