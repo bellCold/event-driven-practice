@@ -1,4 +1,4 @@
-package event.payservice.domain
+package event.payservice.adpater.out.persistence.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
